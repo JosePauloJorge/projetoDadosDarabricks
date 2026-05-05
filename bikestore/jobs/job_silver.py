@@ -2,6 +2,8 @@ from bikestore.processors.dynamic_pipeline import DynamicPipeline
 # ============================================
 # CONFIG
 # ============================================
+print(spark)
+
 resource_path = "/Volumes/bikestore/resource/01-origem/"
 bronze_path = "bikestore.bronze"
 silver_path = "bikestore.silver"
@@ -23,15 +25,15 @@ bronze_map = {
 # Regras de validação
 # ============================================
 validation_map = {
-    #"brands": ["brand_name"],
-    #"categories": ["category_name"],
-    #"customers": ["first_name", "last_name","phone", "email"],
-    #"order_items": ["item_id","product_id","quantity","list_price","discount"],
-    #"orders": ["customer_id","order_status","order_date","required_date","shipped_date","store_id","staff_id"],
-    #"products": ["product_name","brand_id","category_id","model_year","list_price"],
-    #"staffs": ["first_name","last_name","email","phone","active","store_id","manager_id"],
-    #"stocks": ["store_id","product_id","quantity"],
-    #"stores": ["store_id","store_name","phone","email","street","city","state","zip_code"],
+    "brands": ["brand_name"],
+    "categories": ["category_name"],
+    "customers": ["first_name", "last_name","phone", "email"],
+    "order_items": ["item_id","product_id","quantity","list_price","discount"],
+    "orders": ["customer_id","order_status","order_date","required_date","shipped_date","store_id","staff_id"],
+    "products": ["product_name","brand_id","category_id","model_year","list_price"],
+    "staffs": ["first_name","last_name","email","phone","active","store_id","manager_id"],
+    "stocks": ["store_id","product_id","quantity"],
+    "stores": ["store_id","store_name","phone","email","street","city","state","zip_code"],
 }
 
 # ============================================
@@ -41,7 +43,7 @@ pipeline = DynamicPipeline(
     spark=spark,  # já existe no Databricks
     bronze_map=bronze_map,
     validation_map=validation_map,
-    silver_path=bronze_path,
+    silver_path=silver_path,
     quarantine_path=quarantine_path
 )
 

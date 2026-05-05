@@ -63,7 +63,7 @@ class DynamicPipeline:
         print(f"Processando: {table_name}")
         print(f"Origem: {file_path}")
         print(f"{'='*60}")
-        
+
         # 1. Leitura
         df = self._read_csv(file_path)
         
@@ -77,7 +77,8 @@ class DynamicPipeline:
             print("Sem regras de validação - todos os registros são válidos")
             df_valid = df
             df_invalid = None
-        
+
+                
         # 3. Metadata
         pipeline_run = datetime.now().strftime("%Y%m%d_%H%M%S")
         
@@ -86,7 +87,7 @@ class DynamicPipeline:
             .withColumn("_processed_at", current_timestamp())
             .withColumn("_pipeline_run", lit(pipeline_run))
         )
-        
+                
         # 4. Gravação Silver
         silver_table = f"{self.silver_path}.{table_name}"
         
@@ -97,9 +98,9 @@ class DynamicPipeline:
             .saveAsTable(silver_table)
         
         print(f"✓ Silver gravado em: {silver_table}")
-        
+       
         # 5. Quarentena
-        if df_invalid.limit(1).count() > 0:
+        if df_invalid is not None:
             print(f"Registros inválidos: {df_invalid.count()}")
 
             df_invalid_with_metadata = (
@@ -121,8 +122,7 @@ class DynamicPipeline:
         else:
             print("Nenhum registro inválido encontrado")
         
-        #print(f"✓ Tabela {table_name} finalizada")
-    
+        print(f"✓ Tabela {table_name} finalizada")
     def run(self):
         """Executa o pipeline completo"""
         print("\n" + "="*60)
@@ -141,4 +141,3 @@ class DynamicPipeline:
         print("\n" + "="*60)
         print("PIPELINE FINALIZADO")
         print("="*60)
-
