@@ -28,6 +28,7 @@ validation_map = {
     "brands": ["brand_name"],
     "categories": ["category_name"],
     "customers": ["first_name", "last_name","phone", "email"],
+    "customers": ["phone"],    
     "order_items": ["item_id","product_id","quantity","list_price","discount"],
     "orders": ["customer_id","order_status","order_date","required_date","shipped_date","store_id","staff_id"],
     "products": ["product_name","brand_id","category_id","model_year","list_price"],

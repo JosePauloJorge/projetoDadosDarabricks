@@ -66,10 +66,14 @@ class DynamicPipeline:
 
         # 1. Leitura
         df = self._read_csv(file_path)
+
+        print(f"{'!'*60}")        
         
         # 2. Validação
         required_columns = self.validation_map.get(table_name, [])
-        
+
+        print(f"{'*'*60}")        
+
         if required_columns:
             print(f"Validando colunas: {', '.join(required_columns)}")
             df_valid, df_invalid = self._validate_and_split(df, required_columns)
@@ -78,7 +82,7 @@ class DynamicPipeline:
             df_valid = df
             df_invalid = None
 
-                
+
         # 3. Metadata
         pipeline_run = datetime.now().strftime("%Y%m%d_%H%M%S")
         
